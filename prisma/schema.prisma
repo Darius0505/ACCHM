@@ -1,0 +1,1399 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// ACCHM ERP - Accounting Module Schema
+// Version: 1.1.0 (Simplified - No AID)
+// Updated: 2026-01-20
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// SECTION 1: COMPANY & CONFIGURATION
+// ============================================================================
+
+model Company {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  
+  // Multi-language names
+  name          String   // Vietnamese (default)
+  nameEN        String?  // English
+  nameJP        String?  // Japanese
+  nameOther     String?  // Other language (configurable)
+  
+  taxCode       String?
+  address       String?  @db.NVarChar(500)
+  phone         String?
+  email         String?
+  fax           String?
+  website       String?
+  logo          String?
+  
+  // Leadership
+  directorName        String? // Giám đốc
+  chiefAccountantName String? // Kế toán trưởng
+  establishedDate     DateTime? // Ngày thành lập
+
+  currency      String   @default("VND")
+  
+  // Fiscal year settings
+  fiscalYearStart Int    @default(1) // Month 1-12
+  
+  // Accounting settings
+  accountingStandard String @default("TT200") // TT200, TT133
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  
+  // Relations
+  fiscalYears   FiscalYear[]
+  accounts      Account[]
+  partnerTypes  PartnerType[]
+  partners      Partner[]
+  productCategories ProductCategory[]
+  products      Product[]
+  warehouses    Warehouse[]
+  bankAccounts  BankAccount[]
+  journals      Journal[]
+  cashReceipts  CashReceipt[]
+  cashPayments  CashPayment[]
+  invoices      Invoice[]
+  payments      Payment[]
+  users         User[]
+  reportTemplates ReportTemplate[]
+  currencies    Currency[]
+  taxGroups     TaxGroup[]
+  taxRates      TaxRate[]
+  files         FileMetadata[]
+  branches      Branch[]
+  departments   Department[]
+  openingDetails OpeningBalanceDetail[]
+  fixedAssets   FixedAsset[]
+}
+
+// ============================================================================
+// SECTION 1B: FILE METADATA (Image Storage)
+// ============================================================================
+
+model FileMetadata {
+  id          String   @id @default(uuid())
+  companyId   String
+
+  // Original file info
+  fileName    String                    // Original filename from user
+  
+  // Storage paths (relative to data/uploads/)
+  storagePath String                    // "{companyId}/logos/orig_abc123.webp"
+  thumbPath   String?                   // "{companyId}/logos/thumb_abc123.webp"
+  
+  // File info
+  mimeType    String                    // "image/webp"
+  fileSize    Int                       // Bytes (after compression)
+  width       Int?
+  height      Int?
+  hash        String                    // Content hash for duplicate detection
+
+  // Context: what entity this file belongs to
+  entityType  String                    // "LOGO", "PRODUCT", "DOCUMENT", "AVATAR"
+  entityId    String?                   // FK to the owning entity (product id, etc.)
+
+  // Audit
+  uploadedBy  String?
+  createdAt   DateTime @default(now())
+  deletedAt   DateTime?                 // Soft delete
+
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([companyId])
+  @@index([entityType, entityId])
+  @@index([hash])
+}
+
+// ============================================================================
+// SECTION 2: FISCAL YEAR & ACCOUNTING PERIODS
+// ============================================================================
+
+model FiscalYear {
+  id          String   @id @default(uuid())
+  companyId   String
+  
+  // Multi-language names
+  name        String   // Vietnamese: "Năm tài chính 2026"
+  nameEN      String?  // English: "Fiscal Year 2026"
+  nameJP      String?  // Japanese
+  nameOther   String?
+  
+  year        Int      // 2026
+  startDate   DateTime // Ngày bắt đầu kỳ kế toán
+  endDate     DateTime
+  
+  // Status workflow: OPEN → SOFT_CLOSED → HARD_CLOSED → LOCKED
+  status      String   @default("OPEN") // OPEN, SOFT_CLOSED, HARD_CLOSED, LOCKED
+  
+  // Close tracking
+  softClosedAt  DateTime?
+  softClosedBy  String?
+  hardClosedAt  DateTime?
+  hardClosedBy  String?
+  lockedAt      DateTime?
+  lockedBy      String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  periods     AccountingPeriod[]
+  
+  @@unique([companyId, year])
+  @@index([companyId, status])
+}
+
+model AccountingPeriod {
+  id            String   @id @default(uuid())
+  fiscalYearId  String
+  
+  // Multi-language names  
+  name          String   // "Tháng 01/2026"
+  nameEN        String?  // "January 2026"
+  nameJP        String?  // "2026年1月"
+  nameOther     String?
+  
+  periodNumber  Int      // 1-12
+  startDate     DateTime
+  endDate       DateTime
+  
+  // Status workflow: OPEN → SOFT_CLOSED → HARD_CLOSED
+  status        String   @default("OPEN")
+  
+  // Close tracking
+  softClosedAt  DateTime?
+  softClosedBy  String?
+  hardClosedAt  DateTime?
+  hardClosedBy  String?
+  
+  closingEntryId String?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  fiscalYear    FiscalYear @relation(fields: [fiscalYearId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@unique([fiscalYearId, periodNumber])
+  @@index([fiscalYearId, status])
+}
+
+// ============================================================================
+// SECTION 3: CHART OF ACCOUNTS
+// ============================================================================
+
+model Account {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String   // "111", "112", "131"...
+  
+  // Multi-language names
+  name          String   // Vietnamese
+  nameEN        String?  // English
+  nameJP        String?  // Japanese
+  nameOther     String?
+  
+  type          String   // ASSET, LIABILITY, EQUITY, REVENUE, EXPENSE
+  nature        String   // DEBIT, CREDIT
+  level         Int      @default(1)
+  isPosting     Boolean  @default(true)
+  isActive      Boolean  @default(true)
+  
+  parentId      String?
+  
+  openingDebit  Decimal  @default(0) @db.Decimal(18, 2)
+  openingCredit Decimal  @default(0) @db.Decimal(18, 2)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parent        Account? @relation("AccountHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children      Account[] @relation("AccountHierarchy")
+  
+  journalLines  JournalEntryLine[]
+  invoiceLines  InvoiceLine[]
+  bankAccounts  BankAccount[]
+  openingDetails OpeningBalanceDetail[]
+  
+  @@unique([companyId, code])
+  @@index([companyId, type])
+  @@index([parentId])
+}
+
+// ============================================================================
+// SECTION 4A: PARTNER TYPES (LOẠI ĐỐI TƯỢNG)
+// ============================================================================
+
+model PartnerType {
+  id          String   @id @default(uuid())
+  companyId   String
+  
+  code        String   // KH, NCC, NV, K
+  
+  // Multi-language names
+  name        String   // Khách hàng, Nhà cung cấp, Nhân viên
+  nameEN      String?  // Customer, Vendor, Employee
+  nameJP      String?
+  nameOther   String?
+  
+  // Phân loại gốc: xác định bản chất loại đối tượng
+  nature      String   // CUSTOMER | VENDOR | EMPLOYEE | BANK | OTHER
+  
+  description String?  @db.NVarChar(500)
+  
+  // Phân cấp (cha-con)
+  parentId    String?
+  parent      PartnerType?  @relation("PartnerTypeHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children    PartnerType[] @relation("PartnerTypeHierarchy")
+  
+  // Tài khoản mặc định cho loại này
+  defaultReceivableAccountId String?  // TK công nợ phải thu (131)
+  defaultPayableAccountId    String?  // TK công nợ phải trả (331)
+  
+  isSystem    Boolean  @default(false)  // Loại mặc định hệ thống
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partners    Partner[]
+  
+  @@unique([companyId, code])
+  @@index([companyId, nature])
+  @@index([parentId])
+}
+
+// ============================================================================
+// SECTION 4B: PARTNERS (ĐỐI TƯỢNG - CUSTOMERS & VENDORS)
+// ============================================================================
+
+model Partner {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String   // KH001, NCC001
+  partnerTypeId String?  // FK → PartnerType (Loại đối tượng)
+  
+  // Multi-language names
+  name          String
+  nameEN        String?
+  nameJP        String?
+  nameOther     String?
+  
+  type          String   // CUSTOMER, VENDOR, BOTH (giữ lại tương thích)
+  
+  taxCode       String?
+  address       String?  @db.NVarChar(500)
+  phone         String?
+  email         String?
+  contactPerson String?
+  
+  paymentTermDays Int     @default(30)
+  creditLimit     Decimal? @db.Decimal(18, 2)
+  
+  receivableAccountId String?
+  payableAccountId    String?
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partnerType   PartnerType? @relation(fields: [partnerTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  invoices      Invoice[]
+  payments      Payment[]
+  cashReceipts  CashReceipt[]
+  cashPayments  CashPayment[]
+  journalLines  JournalEntryLine[]
+  bankTransactions BankTransaction[]
+  bankAccounts  BankAccount[]
+  openingDetails OpeningBalanceDetail[]
+  
+  contacts      PartnerContact[]
+  
+  @@unique([companyId, code])
+  @@index([companyId, type])
+  @@index([companyId, partnerTypeId])
+}
+
+
+// ============================================================================
+// SECTION 6: PRODUCTS & INVENTORY
+// ============================================================================
+
+model ProductCategory {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String
+  name          String
+  description   String?  @db.NVarChar(500)
+  
+  parentId      String?
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parent        ProductCategory? @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children      ProductCategory[] @relation("CategoryHierarchy")
+  products      Product[]
+
+  @@unique([companyId, code])
+  @@index([parentId])
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String
+  name          String
+  nameEN        String?
+  
+  productCategoryId String?
+  
+  type          String   // MATERIAL, PRODUCT, SERVICE, TOOL
+  unit          String?  // Cai, kg, m...
+  
+  purchasePrice Decimal? @default(0) @db.Decimal(18, 2)
+  salePrice     Decimal? @default(0) @db.Decimal(18, 2)
+  taxRate       Decimal? @default(0) @db.Decimal(5, 2) // 0, 5, 8, 10
+  
+  // Accounting Accounts
+  inventoryAccountId String? // 152, 156...
+  cogsAccountId      String? // 632...
+  revenueAccountId   String? // 511...
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category      ProductCategory? @relation(fields: [productCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  // Relations for usage in transactions (future)
+  // invoiceLines InvoiceLine[]
+  openingDetails OpeningBalanceDetail[]
+  
+  @@unique([companyId, code])
+  @@index([companyId, type])
+  @@index([productCategoryId])
+}
+
+// ============================================================================
+// SECTION 6B: WAREHOUSES (KHO)
+// ============================================================================
+
+model Warehouse {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String
+  name          String
+  nameEN        String?
+  
+  address       String?  @db.NVarChar(500)
+  description   String?  @db.NVarChar(500)
+  
+  // Hierarchy
+  parentId      String?
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parent        Warehouse? @relation("WarehouseHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children      Warehouse[] @relation("WarehouseHierarchy")
+  openingDetails OpeningBalanceDetail[]
+  
+  @@unique([companyId, code])
+  @@index([parentId])
+}
+
+// ============================================================================
+// SECTION 5: BANK ACCOUNTS (Existing)
+// ============================================================================
+
+model BankAccount {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String   // BANK01
+  
+  name          String
+  nameEN        String?
+  nameJP        String?
+  nameOther     String?
+  
+  bankName      String
+  accountNumber String
+  branch        String?
+  currency      String   @default("VND")
+  
+  accountId     String   // Linked GL account (112x)
+  partnerId     String?  // Linked Bank Partner
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  account       Account  @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner       Partner? @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  transactions  BankTransaction[]
+  openingDetails OpeningBalanceDetail[]
+  
+  @@unique([companyId, code])
+}
+
+// ============================================================================
+// SECTION 6: JOURNALS
+// ============================================================================
+
+model Journal {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String   // GJ, CR, CP, BR, BP, SJ, PJ
+  
+  name          String
+  nameEN        String?
+  nameJP        String?
+  nameOther     String?
+  
+  type          String   // GENERAL, CASH, BANK, SALES, PURCHASE
+  
+  defaultDebitAccountId  String?
+  defaultCreditAccountId String?
+  
+  prefix        String?  // "GJ", "PT", "PC"...
+  template      String?  @default("{PREFIX}-{YYYY}-{NNNNN}")
+  nextNumber    Int      @default(1)
+  padding       Int      @default(5)
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  entries       JournalEntry[]
+  
+  // System Metadata Relations
+  gridColumns   Sys_GridColumn[]
+  voucherRules  Sys_VoucherRule[]
+  workflows     Sys_VoucherWorkflow[]
+  
+  @@unique([companyId, code])
+}
+
+// ============================================================================
+// SECTION 7: JOURNAL ENTRIES
+// ============================================================================
+
+model JournalEntry {
+  id            String   @id @default(uuid())
+  journalId     String
+  
+  entryNumber   String   // "GJ-2026-00001" - Human readable
+  date          DateTime
+  postingDate   DateTime
+  
+  periodId      String?
+  
+  reference     String?
+  
+  description   String   @db.NVarChar(500)
+  descriptionEN String?  @db.NVarChar(500)
+  descriptionJP String?  @db.NVarChar(500)
+  descriptionOther String? @db.NVarChar(500)
+  
+  status        String   @default("DRAFT") // DRAFT, POSTED, CANCELLED
+  
+  totalDebit    Decimal  @db.Decimal(18, 2)
+  totalCredit   Decimal  @db.Decimal(18, 2)
+  
+  createdBy     String
+  postedBy      String?
+  postedAt      DateTime?
+  cancelledBy   String?
+  cancelledAt   DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  journal       Journal  @relation(fields: [journalId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  lines         JournalEntryLine[]
+  
+  cashReceipts    CashReceipt[]
+  cashPayments    CashPayment[]
+  bankTransaction BankTransaction?
+  invoice         Invoice?
+  payment         Payment?
+  
+  @@unique([journalId, entryNumber])
+  @@index([journalId, date])
+  @@index([status])
+}
+
+model JournalEntryLine {
+  id            String   @id @default(uuid())
+  entryId       String
+  
+  lineNumber    Int
+  accountId     String
+  
+  description   String?  @db.NVarChar(500)
+  
+  debit         Decimal  @default(0) @db.Decimal(18, 2)
+  credit        Decimal  @default(0) @db.Decimal(18, 2)
+  
+  partnerId     String?
+  
+  createdAt     DateTime @default(now())
+  
+  entry         JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  account       Account  @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner       Partner? @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([entryId])
+  @@index([accountId])
+  @@index([partnerId])
+}
+
+// ============================================================================
+// SECTION 8: CASH MANAGEMENT
+// ============================================================================
+
+model CashReceipt {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  receiptNumber String   // "PT-2026-00001" - Human readable
+  date          DateTime
+  
+  partnerId     String?
+  payerName     String?  @db.NVarChar(500) // [New] Manual payer name
+  
+  amount        Decimal  @db.Decimal(18, 2)
+  
+  description   String   @db.NVarChar(500)
+  descriptionEN String?  @db.NVarChar(500)
+  descriptionJP String?  @db.NVarChar(500)
+  descriptionOther String? @db.NVarChar(500)
+  
+  attachments   String?  @db.NVarChar(500) // "1 chứng từ gốc"
+  
+  debitAccountId  String
+  creditAccountId String
+  
+  journalEntryId String?
+  
+  status        String   @default("DRAFT")
+  
+  createdBy     String
+  postedBy      String?
+  postedAt      DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner       Partner? @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journalEntry  JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@unique([companyId, receiptNumber])
+  @@index([companyId, date])
+
+  details       CashReceiptDetail[]
+}
+
+model CashReceiptDetail {
+  id            String   @id @default(uuid())
+  cashReceiptId String
+
+  description   String?  @db.NVarChar(500)
+  
+  debitAccountId  String?
+  creditAccountId String?
+
+  amount        Decimal  @db.Decimal(18, 2)
+  
+  // Multi-currency support (optional for now but good to have)
+  originalCurrency String? // VND, USD
+  exchangeRate     Decimal? @default(1) @db.Decimal(10, 4)
+  originalAmount   Decimal? @db.Decimal(18, 2)
+
+  partnerId     String? // Object (Customer, Vendor, etc.) associated with this line
+  
+  // Future linkage
+  invoiceId     String? // If paying for specific invoice
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  cashReceipt   CashReceipt @relation(fields: [cashReceiptId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  
+  @@index([cashReceiptId])
+}
+
+// ============================================================================
+// SECTION 4C: PARTNER CONTACTS (Liên hệ)
+// ============================================================================
+
+model PartnerContact {
+  id            String   @id @default(uuid())
+  partnerId     String
+  
+  name          String
+  phone         String?
+  email         String?
+  position      String?  // Chức vụ
+  note          String?  @db.NVarChar(500)
+  
+  isDefault     Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  
+  @@index([partnerId])
+}
+
+model CashPayment {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  paymentNumber String   // "PC-2026-00001"
+  date          DateTime
+  
+  partnerId     String?
+  payeeName     String?  @db.NVarChar(500) // Người nhận tiền (Auto-fill from Contact)
+  
+  amount        Decimal  @db.Decimal(18, 2)
+  
+  description   String   @db.NVarChar(500)
+  descriptionEN String?  @db.NVarChar(500)
+  descriptionJP String?  @db.NVarChar(500)
+  descriptionOther String? @db.NVarChar(500)
+  
+  attachments   String?  @db.NVarChar(500) // "1 chứng từ gốc"
+  
+  debitAccountId  String
+  creditAccountId String
+  
+  journalEntryId String?
+  
+  status        String   @default("DRAFT")
+  
+  createdBy     String
+  postedBy      String?
+  postedAt      DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner       Partner? @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journalEntry  JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  details       CashPaymentDetail[]
+  
+  @@unique([companyId, paymentNumber])
+  @@index([companyId, date])
+}
+
+model CashPaymentDetail {
+  id            String   @id @default(uuid())
+  cashPaymentId String
+
+  description   String?  @db.NVarChar(500)
+  
+  debitAccountId  String?
+  creditAccountId String?
+
+  amount        Decimal  @db.Decimal(18, 2)
+  
+  originalCurrency String? 
+  exchangeRate     Decimal? @default(1) @db.Decimal(10, 4)
+  originalAmount   Decimal? @db.Decimal(18, 2)
+
+  partnerId     String? 
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  cashPayment   CashPayment @relation(fields: [cashPaymentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  
+  @@index([cashPaymentId])
+}
+
+// ============================================================================
+// SECTION 9: BANK TRANSACTIONS
+// ============================================================================
+
+model BankTransaction {
+  id              String   @id @default(uuid())
+  bankAccountId   String
+  
+  transactionNumber String // "BC-2026-00001"
+  date            DateTime
+  type            String   // DEPOSIT, WITHDRAWAL, TRANSFER
+  
+  partnerId       String?
+  
+  amount          Decimal  @db.Decimal(18, 2)
+  
+  description     String   @db.NVarChar(500)
+  descriptionEN   String?  @db.NVarChar(500)
+  descriptionJP   String?  @db.NVarChar(500)
+  descriptionOther String? @db.NVarChar(500)
+  
+  reference       String?
+  
+  debitAccountId  String
+  creditAccountId String
+  
+  journalEntryId  String? @unique
+  
+  status          String   @default("DRAFT")
+  
+  createdBy       String
+  postedBy        String?
+  postedAt        DateTime?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner         Partner? @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journalEntry    JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([bankAccountId, date])
+}
+
+// ============================================================================
+// SECTION 10: INVOICES (AR/AP)
+// ============================================================================
+
+model Invoice {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  invoiceNumber String   // "HD-2026-00001" - Human readable
+  vendorInvoiceNumber String?
+  type          String   // SALES, PURCHASE
+  date          DateTime
+  dueDate       DateTime
+  
+  partnerId     String
+  
+  description   String?  @db.NVarChar(500)
+  descriptionEN String?  @db.NVarChar(500)
+  descriptionJP String?  @db.NVarChar(500)
+  descriptionOther String? @db.NVarChar(500)
+  
+  subtotal      Decimal  @db.Decimal(18, 2)
+  taxAmount     Decimal  @default(0) @db.Decimal(18, 2)
+  totalAmount   Decimal  @db.Decimal(18, 2)
+  paidAmount    Decimal  @default(0) @db.Decimal(18, 2)
+  balanceAmount Decimal  @db.Decimal(18, 2)
+  
+  accountId     String
+  
+  journalEntryId String? @unique
+  
+  status        String   @default("DRAFT")
+  paymentStatus String   @default("UNPAID")
+  
+  createdBy     String
+  postedBy      String?
+  postedAt      DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journalEntry  JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  lines         InvoiceLine[]
+  allocations   PaymentAllocation[]
+  
+  @@unique([companyId, invoiceNumber, type])
+  @@index([companyId, partnerId])
+  @@index([companyId, type, status])
+  @@index([companyId, type, paymentStatus])
+}
+
+model InvoiceLine {
+  id            String   @id @default(uuid())
+  invoiceId     String
+  
+  lineNumber    Int
+  description   String   @db.NVarChar(500)
+  accountId     String
+  
+  quantity      Decimal  @default(1) @db.Decimal(18, 4)
+  unitPrice     Decimal  @db.Decimal(18, 2)
+  amount        Decimal  @db.Decimal(18, 2)
+  
+  taxRate       Decimal  @default(0) @db.Decimal(5, 2)
+  taxAmount     Decimal  @default(0) @db.Decimal(18, 2)
+  
+  createdAt     DateTime @default(now())
+  
+  invoice       Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  account       Account  @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([invoiceId])
+}
+
+// ============================================================================
+// SECTION 11: PAYMENTS
+// ============================================================================
+
+model Payment {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  paymentNumber String   // "TT-2026-00001"
+  type          String   // RECEIPT, PAYMENT
+  date          DateTime
+  
+  partnerId     String
+  
+  amount        Decimal  @db.Decimal(18, 2)
+  paymentMethod String   // CASH, BANK, CHECK
+  bankAccountId String?
+  
+  description   String?  @db.NVarChar(500)
+  descriptionEN String?  @db.NVarChar(500)
+  descriptionJP String?  @db.NVarChar(500)
+  descriptionOther String? @db.NVarChar(500)
+  
+  journalEntryId String? @unique
+  
+  status        String   @default("DRAFT")
+  
+  createdBy     String
+  postedBy      String?
+  postedAt      DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner       Partner  @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journalEntry  JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  allocations   PaymentAllocation[]
+  
+  @@unique([companyId, paymentNumber])
+  @@index([companyId, partnerId])
+}
+
+model PaymentAllocation {
+  id          String   @id @default(uuid())
+  paymentId   String
+  invoiceId   String
+  
+  amount      Decimal  @db.Decimal(18, 2)
+  
+  createdAt   DateTime @default(now())
+  
+  payment     Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([paymentId])
+  @@index([invoiceId])
+}
+
+// ============================================================================
+// SECTION 12: USERS, ROLES & AUDIT
+// ============================================================================
+
+model User {
+  id            String   @id @default(uuid())
+  companyId     String?
+  branchId      String?
+  departmentId  String?
+  
+  code          String
+  email         String   @unique
+  name          String
+  password      String
+  phone         String?
+  avatar        String?
+  
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company?    @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  branch        Branch?     @relation(fields: [branchId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  department    Department? @relation(fields: [departmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  roles         UserRole[]
+  auditLogs     AuditLog[]
+  
+  @@unique([companyId, code])
+  @@index([companyId])
+  @@index([branchId])
+  @@index([departmentId])
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  companyId   String?  // Null for system roles, set for custom roles
+  
+  code        String   // "ADMIN", "ACCOUNTANT" (Unique Identifier)
+  name        String   // "Quản trị hệ thống", "Kế toán viên" (Display Name)
+  description String?
+  isSystem    Boolean  @default(false)  // System roles cannot be deleted
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  users       UserRole[]
+  permissions RolePermission[]
+  dataScopes  RoleDataScope[]
+  
+  @@unique([companyId, code])
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  
+  formId      String
+  action      String   // "VIEW", "ADD", "EDIT", "DELETE", "APPROVE", "EXPORT", "PRINT"
+  description String?
+  
+  form        Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  roles       RolePermission[]
+  
+  @@unique([formId, action])
+  @@index([formId])
+}
+
+model UserRole {
+  userId      String
+  roleId      String
+  
+  assignedAt  DateTime @default(now())
+  assignedBy  String?
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  
+  @@id([userId, roleId])
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  
+  assignedAt   DateTime @default(now())
+  
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  
+  @@id([roleId, permissionId])
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  userId        String?
+  companyId     String?
+  
+  action        String   // "CREATE", "UPDATE", "DELETE", "LOGIN"
+  entity        String   // "Invoice", "User"
+  entityId      String?
+  
+  oldValues     String?  @db.NVarChar(Max)
+  newValues     String?  @db.NVarChar(Max)
+  
+  ipAddress     String?
+  userAgent     String?
+  details       String?  @db.NVarChar(Max)
+  
+  createdAt     DateTime @default(now())
+  
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@index([companyId])
+  @@index([entity, entityId])
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+}
+
+// ============================================================================
+// SECTION 12B: ORGANIZATION STRUCTURE (RBAC)
+// ============================================================================
+
+model Branch {
+  id        String   @id @default(uuid())
+  companyId String
+  
+  code      String              // "HN", "HCM", "DN"
+  name      String              // "Chi nhánh Hà Nội"
+  address   String?  @db.NVarChar(500)
+  phone     String?
+  
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  company     Company      @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  departments Department[]
+  users       User[]
+  
+  @@unique([companyId, code])
+  @@index([companyId])
+}
+
+model Department {
+  id        String   @id @default(uuid())
+  companyId String
+  branchId  String?
+  
+  code      String              // "KT", "SALE", "KHO"
+  name      String              // "Phòng Kế toán"
+  
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  branch    Branch?  @relation(fields: [branchId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users     User[]
+  
+  @@unique([companyId, code])
+  @@index([companyId])
+  @@index([branchId])
+}
+
+// ============================================================================
+// SECTION 12C: MODULES, FORMS & DATA SCOPE (RBAC)
+// ============================================================================
+
+model Module {
+  id    String @id @default(uuid())
+  code  String @unique          // "SYSTEM", "ACCOUNTING", "SALES"
+  name  String                  // "Hệ thống", "Kế toán"
+  icon  String?                 // Emoji or icon class
+  order Int    @default(0)      // Display order in permission matrix
+  
+  forms Form[]
+}
+
+model Form {
+  id       String @id @default(uuid())
+  moduleId String
+  code     String @unique       // "CASH_RECEIPT", "SALES_ORDER"
+  name     String               // "Thu tiền mặt", "Đơn hàng bán"
+  order    Int    @default(0)
+  
+  module      Module       @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  permissions Permission[]
+  
+  @@index([moduleId])
+}
+
+model RoleDataScope {
+  id         String  @id @default(uuid())
+  roleId     String
+  
+  scopeType  String              // "ALL", "BRANCH", "DEPARTMENT", "OWN"
+  scopeValue String?             // Branch ID or Department ID (null for ALL/OWN)
+  
+  role       Role    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  
+  @@unique([roleId, scopeType, scopeValue])
+  @@index([roleId])
+}
+
+// ============================================================================
+// SECTION 13: REPORT TEMPLATES
+// ============================================================================
+
+// ReportType values (stored as String since SQL Server doesn't support enums):
+// - BALANCE_SHEET       : Bảng cân đối kế toán (B01-DN)
+// - INCOME_STATEMENT    : Báo cáo kết quả HĐKD (B02-DN)
+// - TRIAL_BALANCE       : Bảng cân đối số phát sinh
+// - GENERAL_LEDGER      : Sổ cái
+// - ACCOUNT_DETAIL      : Sổ chi tiết tài khoản
+// - AR_AGING            : Báo cáo tuổi nợ phải thu
+// - AP_AGING            : Báo cáo tuổi nợ phải trả
+// - AR_STATEMENT        : Bảng kê công nợ khách hàng
+// - AP_STATEMENT        : Bảng kê công nợ nhà cung cấp
+// - CASH_BOOK           : Sổ quỹ tiền mặt
+// - BANK_BOOK           : Sổ tiền gửi ngân hàng
+// - CUSTOM              : Mẫu tự định nghĩa
+
+model ReportTemplate {
+  id          String   @id @default(uuid())
+  companyId   String
+  
+  code        String   // VAS code: B01-DN, B02-DN, custom code
+  
+  // Multi-language names
+  name        String   // Vietnamese
+  nameEN      String?  // English
+  nameJP      String?  // Japanese
+  nameOther   String?
+  
+  type        String   // ReportType values - see comments above
+  category    String   // FINANCIAL, AR, AP, INVENTORY, CUSTOM
+  
+  // Template configuration (JSON)
+  // Contains: columns, grouping, styling, headers, footers
+  config      String   @db.NVarChar(Max)
+  
+  // VAS templates are system-defined, cannot be deleted
+  isSystem    Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  
+  // Ordering for display
+  sortOrder   Int      @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@unique([companyId, code])
+  @@index([companyId, type])
+  @@index([companyId, category])
+}
+
+// ============================================================================
+// SECTION 14: CURRENCIES
+// ============================================================================
+
+model Currency {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String   // e.g., VND, USD
+  name          String   // e.g., Đồng Việt Nam
+  nameEN        String?  // e.g., Vietnamese Dong
+  symbol        String?  // e.g., ₫, $
+  
+  exchangeRate  Decimal  @default(1)
+  
+  isDefault     Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@unique([companyId, code])
+}
+
+model TaxGroup {
+  id            String   @id @default(uuid())
+  companyId     String
+  code          String   // e.g., GTGT, NK, TTDB
+  name          String   // e.g., Thuế Giá trị gia tăng
+  description   String?
+  isActive      Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  taxRates      TaxRate[]
+  
+  @@unique([companyId, code])
+}
+
+model TaxRate {
+  id            String   @id @default(uuid())
+  companyId     String
+  taxGroupId    String
+  code          String   // e.g., GTGT10, VAT8
+  name          String   // e.g., GTGT 10%
+  rate          Decimal  // e.g., 10 (for 10%), 0, -1 (KCT)
+  isActive      Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  taxGroup      TaxGroup @relation(fields: [taxGroupId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@unique([companyId, code])
+}
+
+// ============================================================================
+// SECTION 9: OPENING BALANCE DETAILS
+// ============================================================================
+
+model OpeningBalanceDetail {
+  id          String   @id @default(uuid())
+  companyId   String
+  accountId   String   // Link to main Account (131, 156...)
+  
+  // Dimensions
+  partnerId   String?  // For Customers/Vendors
+  productId   String?  // For Inventory
+  warehouseId String?  // For Inventory
+  bankAccountId String? // For Bank (112)
+  fixedAssetId  String? // For Fixed Assets (211)
+  
+  // Values
+  quantity    Decimal  @default(0) @db.Decimal(18, 4)
+  unitPrice   Decimal  @default(0) @db.Decimal(18, 2)
+  
+  amount      Decimal  @default(0) @db.Decimal(18, 2) // Converted Value
+  debit       Decimal  @default(0) @db.Decimal(18, 2)
+  credit      Decimal  @default(0) @db.Decimal(18, 2)
+  
+  // Meta
+  note        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  account     Account  @relation(fields: [accountId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  partner     Partner? @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  product     Product? @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  warehouse   Warehouse? @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  bankAccount BankAccount? @relation(fields: [bankAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  fixedAsset  FixedAsset? @relation(fields: [fixedAssetId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([companyId, accountId])
+  @@index([partnerId])
+  @@index([productId])
+  @@index([fixedAssetId])
+}
+
+// ============================================================================
+// SECTION 6C: FIXED ASSETS (TÀI SẢN CỐ ĐỊNH)
+// ============================================================================
+
+model FixedAsset {
+  id            String   @id @default(uuid())
+  companyId     String
+  
+  code          String
+  name          String
+  nameEN        String?
+  
+  costAccountId        String? // 211
+  depreciationAccountId String? // 214
+  
+  originalPrice Decimal  @default(0) @db.Decimal(18, 2)
+  
+  purchaseDate  DateTime?
+  startDate     DateTime? // Date start using/depreciating
+  
+  lifeTimeMonths Int?
+  
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  openingDetails OpeningBalanceDetail[]
+  
+  @@unique([companyId, code])
+}
+
+// ============================================================================
+// SECTION 13: HYBRID CORE SYSTEM METADATA
+// ============================================================================
+
+model Sys_GridColumn {
+  id          String   @id @default(uuid())
+  journalId   String
+  
+  field       String   // e.g. "debitAccount", "amount"
+  headerName  String   // e.g. "TK Nợ", "Số tiền"
+  width       Int?
+  flex        Float?
+  type        String   // "text", "number", "currency", "select", "account", "lookup"
+  align       String?  // "left", "center", "right"
+  orderIndex  Int      @default(0)
+  isReadOnly  Boolean  @default(false)
+  isRequired  Boolean  @default(false)
+  lookupApi   String?  // Endpoint to fetch options for "select" or "lookup" types
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  journal     Journal  @relation(fields: [journalId], references: [id], onDelete: Cascade)
+
+  @@index([journalId, orderIndex])
+}
+
+model Sys_VoucherRule {
+  id          String   @id @default(uuid())
+  journalId   String
+  
+  name        String   // e.g. "Bắt buộc TK Nợ 111"
+  description String?
+  condition   String   // JSON Logic or Expression (e.g. details.every(d => d.debitAccount.startsWith("111")))
+  errorMessage String  // "Phiếu thu phải ghi nợ TK 111"
+  isActive    Boolean  @default(true)
+  orderIndex  Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  journal     Journal  @relation(fields: [journalId], references: [id], onDelete: Cascade)
+
+  @@index([journalId, isActive, orderIndex])
+}
+
+model Sys_VoucherWorkflow {
+  id          String   @id @default(uuid())
+  journalId   String
+  
+  action      String   // "SAVE", "DELETE", "POST", "UNPOST"
+  stepOrder   Int      @default(1)
+  taskType    String   // "VALIDATE", "INSERT_RECEIPT", "INSERT_JOURNAL", "CALL_SP"
+  taskConfig  String?  // JSON string containing parameters for the task (e.g., target table, SP name)
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  journal     Journal  @relation(fields: [journalId], references: [id], onDelete: Cascade)
+
+  @@index([journalId, action, stepOrder])
+}
