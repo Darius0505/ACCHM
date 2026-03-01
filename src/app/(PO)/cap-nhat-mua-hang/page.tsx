@@ -5,8 +5,8 @@ export default function PurchaseOrderUpdatePage() {
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-sm">
             {/* Header */}
-            <div className="bg-[#0066b2] text-white flex justify-between items-center px-4 py-2 shadow-sm">
-                <h1 className="font-bold text-lg uppercase tracking-wide">
+            <div className="page-header">
+                <h1 className="header-title">
                     Cập nhật đơn hàng mua - POF2001
                 </h1>
                 <div className="header-actions">
