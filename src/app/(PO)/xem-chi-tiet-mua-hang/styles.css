@@ -1,0 +1,145 @@
+.form-grid {
+    display: grid;
+    grid-template-columns: minmax(130px, auto) 1fr minmax(130px, auto) 1fr;
+    gap: 8px 30px;
+    align-items: center;
+}
+
+.page-header {
+    background-color: #0066b2;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+    font-weight: bold;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.header-action-btn {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.header-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border-color: #ffffff !important;
+}
+
+.save-icon {
+    width: 20px;
+    height: 20px;
+    color: #ffffff !important;
+}
+
+svg.save-icon[stroke] {
+    stroke: #ffffff !important;
+}
+
+svg.save-icon[fill] {
+    fill: #ffffff !important;
+}
+
+/* Các styles cũ nếu cần giữ lại cho các phần khác, nhưng ở đây mình cập nhật grid */
+.info-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.list-kethua-gap {
+    gap: 8px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.element-kethua-gap {
+    gap: 8px;
+    margin-right: 60px;
+}
+
+.grid-thead {
+    background-color: #deeff7 !important;
+    color: #3a3ebf !important;
+    /* text-align: center !important;
+    font-weight: bold !important;
+    border-bottom: 1px solid #d1d5db !important; */
+}
+
+.grid-thead th {
+    background-color: #deeff7 !important;
+    color: #3a3ebf !important;
+    /* border-right: 1px solid #bedaf2 !important;
+    padding: 6px 4px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important; */
+}
+
+.table-lookup-container {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    min-width: 0;
+}
+
+.table-lookup-input {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    outline: none !important;
+    padding: 0 4px !important;
+    font-size: 11px !important;
+    height: 18px !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.table-lookup-btn {
+    flex: 0 0 auto !important;
+    width: 22px !important;
+    height: 18px !important;
+    background-color: #f3f4f6 !important;
+    border-left: 1px solid #d1d5db !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    font-size: 10px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.table-lookup-btn:hover {
+    background-color: #e5e7eb !important;
+}
+
+.grid-boder-top {
+    margin-top: 40px;
+}
+
+.grid-boder-top th {
+    min-width: 65px;
+}
