@@ -1,0 +1,1649 @@
+[
+    {
+        "code": "1",
+        "name": "TÀI SẢN",
+        "nameEN": "ASSETS",
+        "nameJP": "資産",
+        "type": "ASSET",
+        "nature": "DEBIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "11",
+                "name": "Tiền và các khoản tương đương tiền",
+                "nameEN": "Cash and cash equivalents",
+                "nameJP": "現金及び現金同等物",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "111",
+                        "name": "Tiền mặt",
+                        "nameEN": "Cash on hand",
+                        "nameJP": "現金",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "1111",
+                                "name": "Tiền Việt Nam",
+                                "nameEN": "Vietnamese Dong",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1112",
+                                "name": "Ngoại tệ",
+                                "nameEN": "Foreign currency",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1113",
+                                "name": "Vàng tiền tệ",
+                                "nameEN": "Monetary gold",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "112",
+                        "name": "Tiền gửi ngân hàng",
+                        "nameEN": "Bank deposits",
+                        "nameJP": "銀行預金",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "1121",
+                                "name": "Tiền Việt Nam",
+                                "nameEN": "Vietnamese Dong",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1122",
+                                "name": "Ngoại tệ",
+                                "nameEN": "Foreign currency",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1123",
+                                "name": "Vàng tiền tệ",
+                                "nameEN": "Monetary gold",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "113",
+                        "name": "Tiền đang chuyển",
+                        "nameEN": "Cash in transit",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "1131",
+                                "name": "Tiền Việt Nam",
+                                "nameEN": "Vietnamese Dong",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1132",
+                                "name": "Ngoại tệ",
+                                "nameEN": "Foreign currency",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "12",
+                "name": "Đầu tư tài chính ngắn hạn",
+                "nameEN": "Short-term investments",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "121",
+                        "name": "Chứng khoán kinh doanh",
+                        "nameEN": "Trading securities",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "128",
+                        "name": "Đầu tư nắm giữ đến ngày đáo hạn",
+                        "nameEN": "Held-to-maturity investments",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "129",
+                        "name": "Dự phòng giảm giá đầu tư ngắn hạn",
+                        "nameEN": "Provision for diminution in short-term investments",
+                        "type": "ASSET",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "13",
+                "name": "Các khoản phải thu",
+                "nameEN": "Receivables",
+                "nameJP": "売掛金",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "131",
+                        "name": "Phải thu của khách hàng",
+                        "nameEN": "Trade receivables",
+                        "nameJP": "売掛金",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "133",
+                        "name": "Thuế GTGT được khấu trừ",
+                        "nameEN": "Deductible VAT",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "1331",
+                                "name": "Thuế GTGT được khấu trừ của hàng hóa, dịch vụ",
+                                "nameEN": "Deductible VAT on goods and services",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1332",
+                                "name": "Thuế GTGT được khấu trừ của TSCĐ",
+                                "nameEN": "Deductible VAT on fixed assets",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "136",
+                        "name": "Phải thu nội bộ",
+                        "nameEN": "Inter-company receivables",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "138",
+                        "name": "Phải thu khác",
+                        "nameEN": "Other receivables",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "1381",
+                                "name": "Tài sản thiếu chờ xử lý",
+                                "nameEN": "Shortage of assets awaiting resolution",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1385",
+                                "name": "Phải thu về cổ phần hóa",
+                                "nameEN": "Receivables from equitization",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1388",
+                                "name": "Phải thu khác",
+                                "nameEN": "Other receivables",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "139",
+                        "name": "Dự phòng phải thu khó đòi",
+                        "nameEN": "Provision for doubtful debts",
+                        "type": "ASSET",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "14",
+                "name": "Tạm ứng và chi phí trả trước",
+                "nameEN": "Advances and prepaid expenses",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "141",
+                        "name": "Tạm ứng",
+                        "nameEN": "Advances to employees",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "142",
+                        "name": "Chi phí trả trước",
+                        "nameEN": "Prepaid expenses",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "15",
+                "name": "Hàng tồn kho",
+                "nameEN": "Inventories",
+                "nameJP": "棚卸資産",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "151",
+                        "name": "Hàng mua đang đi đường",
+                        "nameEN": "Goods in transit",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "152",
+                        "name": "Nguyên liệu, vật liệu",
+                        "nameEN": "Raw materials",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "153",
+                        "name": "Công cụ, dụng cụ",
+                        "nameEN": "Tools and supplies",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "154",
+                        "name": "Chi phí sản xuất, kinh doanh dở dang",
+                        "nameEN": "Work in progress",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "155",
+                        "name": "Thành phẩm",
+                        "nameEN": "Finished goods",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "156",
+                        "name": "Hàng hóa",
+                        "nameEN": "Merchandise",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "1561",
+                                "name": "Giá mua hàng hóa",
+                                "nameEN": "Cost of merchandise",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1562",
+                                "name": "Chi phí thu mua hàng hóa",
+                                "nameEN": "Purchasing costs",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "1567",
+                                "name": "Hàng hóa bất động sản",
+                                "nameEN": "Real estate merchandise",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "157",
+                        "name": "Hàng gửi đi bán",
+                        "nameEN": "Goods on consignment",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "158",
+                        "name": "Hàng hóa kho bảo thuế",
+                        "nameEN": "Goods in bonded warehouse",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "159",
+                        "name": "Dự phòng giảm giá hàng tồn kho",
+                        "nameEN": "Provision for inventory obsolescence",
+                        "type": "ASSET",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "21",
+                "name": "Tài sản cố định",
+                "nameEN": "Fixed assets",
+                "nameJP": "固定資産",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "211",
+                        "name": "Tài sản cố định hữu hình",
+                        "nameEN": "Tangible fixed assets",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "2111",
+                                "name": "Nhà cửa, vật kiến trúc",
+                                "nameEN": "Buildings and structures",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2112",
+                                "name": "Máy móc, thiết bị",
+                                "nameEN": "Machinery and equipment",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2113",
+                                "name": "Phương tiện vận tải",
+                                "nameEN": "Vehicles",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2114",
+                                "name": "Thiết bị, dụng cụ quản lý",
+                                "nameEN": "Office equipment",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2115",
+                                "name": "Cây lâu năm, súc vật làm việc",
+                                "nameEN": "Perennial trees and working animals",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2118",
+                                "name": "Tài sản cố định khác",
+                                "nameEN": "Other fixed assets",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "212",
+                        "name": "Tài sản cố định thuê tài chính",
+                        "nameEN": "Finance lease assets",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "213",
+                        "name": "Tài sản cố định vô hình",
+                        "nameEN": "Intangible assets",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "2131",
+                                "name": "Quyền sử dụng đất",
+                                "nameEN": "Land use rights",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2132",
+                                "name": "Quyền phát hành",
+                                "nameEN": "Publishing rights",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2133",
+                                "name": "Bản quyền, bằng sáng chế",
+                                "nameEN": "Copyrights and patents",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2134",
+                                "name": "Nhãn hiệu hàng hóa",
+                                "nameEN": "Trademarks",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2135",
+                                "name": "Phần mềm máy vi tính",
+                                "nameEN": "Computer software",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2136",
+                                "name": "Giấy phép và giấy phép nhượng quyền",
+                                "nameEN": "Licenses and franchises",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2138",
+                                "name": "TSCĐ vô hình khác",
+                                "nameEN": "Other intangible assets",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "214",
+                        "name": "Hao mòn tài sản cố định",
+                        "nameEN": "Accumulated depreciation",
+                        "type": "ASSET",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "2141",
+                                "name": "Hao mòn TSCĐ hữu hình",
+                                "nameEN": "Accumulated depreciation - tangible",
+                                "type": "ASSET",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2142",
+                                "name": "Hao mòn TSCĐ thuê tài chính",
+                                "nameEN": "Accumulated depreciation - finance lease",
+                                "type": "ASSET",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2143",
+                                "name": "Hao mòn TSCĐ vô hình",
+                                "nameEN": "Accumulated amortization - intangible",
+                                "type": "ASSET",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2147",
+                                "name": "Hao mòn bất động sản đầu tư",
+                                "nameEN": "Accumulated depreciation - investment property",
+                                "type": "ASSET",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "22",
+                "name": "Bất động sản đầu tư",
+                "nameEN": "Investment property",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "221",
+                        "name": "Bất động sản đầu tư",
+                        "nameEN": "Investment property",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "24",
+                "name": "Xây dựng cơ bản dở dang",
+                "nameEN": "Construction in progress",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "241",
+                        "name": "Xây dựng cơ bản dở dang",
+                        "nameEN": "Construction in progress",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "2411",
+                                "name": "Mua sắm TSCĐ",
+                                "nameEN": "Acquisition of fixed assets",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2412",
+                                "name": "Xây dựng cơ bản",
+                                "nameEN": "Construction",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "2413",
+                                "name": "Sửa chữa lớn TSCĐ",
+                                "nameEN": "Major repairs of fixed assets",
+                                "type": "ASSET",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "25",
+                "name": "Đầu tư tài chính dài hạn",
+                "nameEN": "Long-term investments",
+                "type": "ASSET",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "251",
+                        "name": "Đầu tư vào công ty con",
+                        "nameEN": "Investments in subsidiaries",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "252",
+                        "name": "Đầu tư vào công ty liên doanh, liên kết",
+                        "nameEN": "Investments in associates and joint ventures",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "253",
+                        "name": "Đầu tư góp vốn vào đơn vị khác",
+                        "nameEN": "Investments in other entities",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "255",
+                        "name": "Đầu tư nắm giữ đến ngày đáo hạn",
+                        "nameEN": "Held-to-maturity investments",
+                        "type": "ASSET",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "259",
+                        "name": "Dự phòng giảm giá đầu tư dài hạn",
+                        "nameEN": "Provision for diminution in long-term investments",
+                        "type": "ASSET",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "3",
+        "name": "NỢ PHẢI TRẢ",
+        "nameEN": "LIABILITIES",
+        "nameJP": "負債",
+        "type": "LIABILITY",
+        "nature": "CREDIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "31",
+                "name": "Nợ ngắn hạn",
+                "nameEN": "Current liabilities",
+                "type": "LIABILITY",
+                "nature": "CREDIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "311",
+                        "name": "Vay ngắn hạn",
+                        "nameEN": "Short-term borrowings",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "331",
+                        "name": "Phải trả cho người bán",
+                        "nameEN": "Trade payables",
+                        "nameJP": "買掛金",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "333",
+                        "name": "Thuế và các khoản phải nộp Nhà nước",
+                        "nameEN": "Taxes payable",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "3331",
+                                "name": "Thuế GTGT phải nộp",
+                                "nameEN": "VAT payable",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3332",
+                                "name": "Thuế tiêu thụ đặc biệt",
+                                "nameEN": "Special consumption tax",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3333",
+                                "name": "Thuế xuất, nhập khẩu",
+                                "nameEN": "Import-export duties",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3334",
+                                "name": "Thuế thu nhập doanh nghiệp",
+                                "nameEN": "Corporate income tax",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3335",
+                                "name": "Thuế thu nhập cá nhân",
+                                "nameEN": "Personal income tax",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3336",
+                                "name": "Thuế tài nguyên",
+                                "nameEN": "Natural resource tax",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3337",
+                                "name": "Thuế nhà đất, tiền thuê đất",
+                                "nameEN": "Land and housing tax",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3338",
+                                "name": "Thuế bảo vệ môi trường và các loại thuế khác",
+                                "nameEN": "Environmental protection tax and others",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3339",
+                                "name": "Phí, lệ phí và các khoản phải nộp khác",
+                                "nameEN": "Fees and other payables",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "334",
+                        "name": "Phải trả người lao động",
+                        "nameEN": "Payroll payable",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "335",
+                        "name": "Chi phí phải trả",
+                        "nameEN": "Accrued expenses",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "336",
+                        "name": "Phải trả nội bộ",
+                        "nameEN": "Inter-company payables",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "337",
+                        "name": "Thanh toán theo tiến độ kế hoạch hợp đồng xây dựng",
+                        "nameEN": "Progress billings",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "338",
+                        "name": "Phải trả, phải nộp khác",
+                        "nameEN": "Other payables",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "3381",
+                                "name": "Tài sản thừa chờ giải quyết",
+                                "nameEN": "Surplus assets awaiting resolution",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3382",
+                                "name": "Kinh phí công đoàn",
+                                "nameEN": "Trade union fees",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3383",
+                                "name": "Bảo hiểm xã hội",
+                                "nameEN": "Social insurance",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3384",
+                                "name": "Bảo hiểm y tế",
+                                "nameEN": "Health insurance",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3385",
+                                "name": "Phải trả về cổ phần hóa",
+                                "nameEN": "Payables from equitization",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3386",
+                                "name": "Bảo hiểm thất nghiệp",
+                                "nameEN": "Unemployment insurance",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3387",
+                                "name": "Doanh thu chưa thực hiện",
+                                "nameEN": "Deferred revenue",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3388",
+                                "name": "Phải trả, phải nộp khác",
+                                "nameEN": "Other payables",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "34",
+                "name": "Nợ dài hạn",
+                "nameEN": "Non-current liabilities",
+                "type": "LIABILITY",
+                "nature": "CREDIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "341",
+                        "name": "Vay và nợ thuê tài chính dài hạn",
+                        "nameEN": "Long-term borrowings and finance lease liabilities",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "3411",
+                                "name": "Vay dài hạn",
+                                "nameEN": "Long-term borrowings",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3412",
+                                "name": "Nợ thuê tài chính",
+                                "nameEN": "Finance lease liabilities",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "343",
+                        "name": "Nhận ký quỹ, ký cược dài hạn",
+                        "nameEN": "Long-term deposits received",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "344",
+                        "name": "Thuế thu nhập hoãn lại phải trả",
+                        "nameEN": "Deferred tax liabilities",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "347",
+                        "name": "Dự phòng phải trả dài hạn",
+                        "nameEN": "Long-term provisions",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "352",
+                        "name": "Dự phòng phải trả",
+                        "nameEN": "Provisions",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "353",
+                        "name": "Quỹ khen thưởng, phúc lợi",
+                        "nameEN": "Bonus and welfare fund",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "3531",
+                                "name": "Quỹ khen thưởng",
+                                "nameEN": "Bonus fund",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3532",
+                                "name": "Quỹ phúc lợi",
+                                "nameEN": "Welfare fund",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3533",
+                                "name": "Quỹ phúc lợi đã hình thành TSCĐ",
+                                "nameEN": "Welfare fund for fixed assets",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "3534",
+                                "name": "Quỹ thưởng ban quản lý điều hành",
+                                "nameEN": "Management bonus fund",
+                                "type": "LIABILITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "356",
+                        "name": "Quỹ phát triển khoa học và công nghệ",
+                        "nameEN": "R&D fund",
+                        "type": "LIABILITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "4",
+        "name": "VỐN CHỦ SỞ HỮU",
+        "nameEN": "EQUITY",
+        "nameJP": "純資産",
+        "type": "EQUITY",
+        "nature": "CREDIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "41",
+                "name": "Vốn chủ sở hữu",
+                "nameEN": "Owner's equity",
+                "type": "EQUITY",
+                "nature": "CREDIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "411",
+                        "name": "Vốn đầu tư của chủ sở hữu",
+                        "nameEN": "Contributed capital",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "4111",
+                                "name": "Vốn góp của chủ sở hữu",
+                                "nameEN": "Share capital",
+                                "type": "EQUITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "4112",
+                                "name": "Thặng dư vốn cổ phần",
+                                "nameEN": "Share premium",
+                                "type": "EQUITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "4113",
+                                "name": "Quyền chọn chuyển đổi trái phiếu",
+                                "nameEN": "Conversion option of bonds",
+                                "type": "EQUITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "4118",
+                                "name": "Vốn khác",
+                                "nameEN": "Other capital",
+                                "type": "EQUITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "412",
+                        "name": "Chênh lệch đánh giá lại tài sản",
+                        "nameEN": "Revaluation reserve",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "413",
+                        "name": "Chênh lệch tỷ giá hối đoái",
+                        "nameEN": "Foreign exchange differences",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "414",
+                        "name": "Quỹ đầu tư phát triển",
+                        "nameEN": "Investment and development fund",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "417",
+                        "name": "Quỹ hỗ trợ sắp xếp doanh nghiệp",
+                        "nameEN": "Enterprise restructuring fund",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "418",
+                        "name": "Quỹ khác thuộc vốn chủ sở hữu",
+                        "nameEN": "Other reserves",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "419",
+                        "name": "Cổ phiếu quỹ",
+                        "nameEN": "Treasury shares",
+                        "type": "EQUITY",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "421",
+                        "name": "Lợi nhuận sau thuế chưa phân phối",
+                        "nameEN": "Retained earnings",
+                        "type": "EQUITY",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "4211",
+                                "name": "Lợi nhuận sau thuế chưa phân phối năm trước",
+                                "nameEN": "Retained earnings - prior years",
+                                "type": "EQUITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "4212",
+                                "name": "Lợi nhuận sau thuế chưa phân phối năm nay",
+                                "nameEN": "Retained earnings - current year",
+                                "type": "EQUITY",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "5",
+        "name": "DOANH THU",
+        "nameEN": "REVENUE",
+        "nameJP": "収益",
+        "type": "REVENUE",
+        "nature": "CREDIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "51",
+                "name": "Doanh thu bán hàng và cung cấp dịch vụ",
+                "nameEN": "Revenue from sales and services",
+                "type": "REVENUE",
+                "nature": "CREDIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "511",
+                        "name": "Doanh thu bán hàng và cung cấp dịch vụ",
+                        "nameEN": "Sales revenue",
+                        "type": "REVENUE",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "5111",
+                                "name": "Doanh thu bán hàng hóa",
+                                "nameEN": "Sales of merchandise",
+                                "type": "REVENUE",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5112",
+                                "name": "Doanh thu bán các thành phẩm",
+                                "nameEN": "Sales of finished goods",
+                                "type": "REVENUE",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5113",
+                                "name": "Doanh thu cung cấp dịch vụ",
+                                "nameEN": "Service revenue",
+                                "type": "REVENUE",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5114",
+                                "name": "Doanh thu trợ cấp, trợ giá",
+                                "nameEN": "Subsidies revenue",
+                                "type": "REVENUE",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5117",
+                                "name": "Doanh thu kinh doanh bất động sản đầu tư",
+                                "nameEN": "Investment property revenue",
+                                "type": "REVENUE",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5118",
+                                "name": "Doanh thu khác",
+                                "nameEN": "Other revenue",
+                                "type": "REVENUE",
+                                "nature": "CREDIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    },
+                    {
+                        "code": "515",
+                        "name": "Doanh thu hoạt động tài chính",
+                        "nameEN": "Financial income",
+                        "type": "REVENUE",
+                        "nature": "CREDIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "521",
+                        "name": "Các khoản giảm trừ doanh thu",
+                        "nameEN": "Revenue deductions",
+                        "type": "REVENUE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true,
+                        "children": [
+                            {
+                                "code": "5211",
+                                "name": "Chiết khấu thương mại",
+                                "nameEN": "Trade discounts",
+                                "type": "REVENUE",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5212",
+                                "name": "Hàng bán bị trả lại",
+                                "nameEN": "Sales returns",
+                                "type": "REVENUE",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            },
+                            {
+                                "code": "5213",
+                                "name": "Giảm giá hàng bán",
+                                "nameEN": "Sales allowances",
+                                "type": "REVENUE",
+                                "nature": "DEBIT",
+                                "level": 4,
+                                "isPosting": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "6",
+        "name": "CHI PHÍ SẢN XUẤT, KINH DOANH",
+        "nameEN": "OPERATING EXPENSES",
+        "nameJP": "営業費用",
+        "type": "EXPENSE",
+        "nature": "DEBIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "62",
+                "name": "Chi phí sản xuất",
+                "nameEN": "Production costs",
+                "type": "EXPENSE",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "621",
+                        "name": "Chi phí nguyên liệu, vật liệu trực tiếp",
+                        "nameEN": "Direct materials",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "622",
+                        "name": "Chi phí nhân công trực tiếp",
+                        "nameEN": "Direct labor",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "623",
+                        "name": "Chi phí sử dụng máy thi công",
+                        "nameEN": "Construction equipment",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "627",
+                        "name": "Chi phí sản xuất chung",
+                        "nameEN": "Manufacturing overhead",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "63",
+                "name": "Giá vốn hàng bán",
+                "nameEN": "Cost of goods sold",
+                "type": "EXPENSE",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "631",
+                        "name": "Giá thành sản xuất",
+                        "nameEN": "Production cost",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "632",
+                        "name": "Giá vốn hàng bán",
+                        "nameEN": "Cost of goods sold",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "635",
+                        "name": "Chi phí tài chính",
+                        "nameEN": "Financial expenses",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            },
+            {
+                "code": "64",
+                "name": "Chi phí bán hàng và quản lý",
+                "nameEN": "Selling and administrative expenses",
+                "type": "EXPENSE",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": false,
+                "children": [
+                    {
+                        "code": "641",
+                        "name": "Chi phí bán hàng",
+                        "nameEN": "Selling expenses",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "642",
+                        "name": "Chi phí quản lý doanh nghiệp",
+                        "nameEN": "General and administrative expenses",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "7",
+        "name": "THU NHẬP KHÁC",
+        "nameEN": "OTHER INCOME",
+        "type": "REVENUE",
+        "nature": "CREDIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "711",
+                "name": "Thu nhập khác",
+                "nameEN": "Other income",
+                "type": "REVENUE",
+                "nature": "CREDIT",
+                "level": 2,
+                "isPosting": true
+            }
+        ]
+    },
+    {
+        "code": "8",
+        "name": "CHI PHÍ KHÁC",
+        "nameEN": "OTHER EXPENSES",
+        "type": "EXPENSE",
+        "nature": "DEBIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "811",
+                "name": "Chi phí khác",
+                "nameEN": "Other expenses",
+                "type": "EXPENSE",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": true
+            },
+            {
+                "code": "821",
+                "name": "Chi phí thuế thu nhập doanh nghiệp",
+                "nameEN": "Corporate income tax expense",
+                "type": "EXPENSE",
+                "nature": "DEBIT",
+                "level": 2,
+                "isPosting": true,
+                "children": [
+                    {
+                        "code": "8211",
+                        "name": "Chi phí thuế TNDN hiện hành",
+                        "nameEN": "Current income tax expense",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    },
+                    {
+                        "code": "8212",
+                        "name": "Chi phí thuế TNDN hoãn lại",
+                        "nameEN": "Deferred income tax expense",
+                        "type": "EXPENSE",
+                        "nature": "DEBIT",
+                        "level": 3,
+                        "isPosting": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "9",
+        "name": "XÁC ĐỊNH KẾT QUẢ KINH DOANH",
+        "nameEN": "INCOME SUMMARY",
+        "type": "EQUITY",
+        "nature": "CREDIT",
+        "level": 1,
+        "isPosting": false,
+        "children": [
+            {
+                "code": "911",
+                "name": "Xác định kết quả kinh doanh",
+                "nameEN": "Income summary",
+                "type": "EQUITY",
+                "nature": "CREDIT",
+                "level": 2,
+                "isPosting": true
+            }
+        ]
+    }
+]

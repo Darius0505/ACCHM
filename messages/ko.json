@@ -1,0 +1,40 @@
+{
+    "common": {
+        "appName": "ACCHM - 회계 시스템",
+        "save": "저장",
+        "cancel": "취소",
+        "delete": "삭제",
+        "edit": "편집",
+        "add": "추가",
+        "confirm": "확인",
+        "actions": "작업",
+        "loading": "로딩 중..."
+    },
+    "accounts": {
+        "title": "계정과목",
+        "addAccount": "계정과목 추가",
+        "code": "코드",
+        "name": "계정과목명",
+        "type": "유형",
+        "nature": "성격",
+        "status": "상태",
+        "posting": "전기",
+        "summary": "집계",
+        "parent": "상위 계정과목",
+        "noData": "계정과목 데이터가 없습니다.",
+        "deleteConfirm": "이 계정과목을 삭제하시겠습니까?",
+        "deleteError": "하위 계정과목이 있는 계정과목은 삭제할 수 없습니다.",
+        "types": {
+            "ASSET": "자산",
+            "LIABILITY": "부채",
+            "EQUITY": "자본",
+            "REVENUE": "수익",
+            "EXPENSE": "비용"
+        },
+        "natures": {
+            "DEBIT": "차변",
+            "CREDIT": "대변",
+            "BOTH": "양쪽"
+        }
+    }
+}

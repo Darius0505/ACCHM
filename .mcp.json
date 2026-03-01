@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "stitch": {
+            "serverUrl": "https://stitch.googleapis.com/mcp",
+            "headers": {
+                "Authorization": "Bearer YOUR_ACCESS_TOKEN_HERE",
+                "X-Goog-User-Project": "green-grass-485200-t6"
+            }
+        }
+    }
+}

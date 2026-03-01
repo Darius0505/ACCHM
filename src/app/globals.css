@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   ACCHM ERP Design System - Theme Variables
+   ======================================== */
+
+:root {
+  /* Light Mode (Default) */
+  --background: #F7F8FA;
+  --foreground: #1A1D2D;
+
+  /* Primary Colors - Mệnh Hỏa 🔥 (Fire Element - Warm Coral) */
+  --primary: #D2604C;
+  --primary-hover: #C04E3C;
+  --primary-light: rgba(210, 96, 76, 0.1);
+
+  /* Surface & Cards */
+  --surface: #FFFFFF;
+  --surface-hover: #F8FAFC;
+  --surface-active: #F1F5F9;
+
+  /* Borders */
+  --border: #E2E4EA;
+  --border-light: #F1F5F9;
+  --border-focus: #D2604C;
+
+  /* Text */
+  --text-primary: #1A1D2D;
+  --text-secondary: #5F6B7C;
+  --text-muted: #8E99A8;
+  --text-inverse: #FFFFFF;
+
+  /* Status Colors */
+  --success: #22C55E;
+  --success-bg: #DCFCE7;
+  --success-text: #15803D;
+
+  --warning: #F59E0B;
+  --warning-bg: #FEF3C7;
+  --warning-text: #B45309;
+
+  --danger: #EF4444;
+  --danger-bg: #FEE2E2;
+  --danger-text: #DC2626;
+
+  /* Grid & Table */
+  --grid-header-bg: #E2E8F0;
+  --grid-row-hover: #FFFBEB;
+  --grid-row-alt: #F8FAFC;
+
+  /* Sidebar */
+  --sidebar-bg: #FFFFFF;
+  --sidebar-item-hover: #FFF5F2;
+  --sidebar-item-active: #FFE8E2;
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-floating: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+  /* ========================================
+     ACTION BUTTON COLORS (Form Toolbar)
+     Vibrant & Semantic Action Colors
+     ======================================== */
+
+  /* Save Action (Mệnh Hỏa / Warm Coral) - Tốt nhất cho Hành Động Chính */
+  --btn-primary: #D2604C;
+  --btn-primary-hover: #C04E3C;
+  --btn-primary-text: #FFFFFF;
+
+  /* New Action (Navy Blue / Tương sinh Kim/Thủy) - Khởi tạo sạch sẽ */
+  --btn-new: #1E3A8A;
+  --btn-new-hover: #1E40AF;
+  --btn-new-text: #FFFFFF;
+
+  /* Copy Action (Indigo / Mộc) - Vàng tím nhẹ cho sinh sôi */
+  --btn-copy: #4F46E5;
+  --btn-copy-hover: #4338CA;
+  --btn-copy-text: #FFFFFF;
+
+  /* Print Action (Standard Outline) */
+  --btn-secondary: #F1F5F9;
+  --btn-secondary-hover: #E2E8F0;
+  --btn-secondary-text: #475569;
+  --btn-secondary-border: #CBD5E1;
+
+  /* Delete Action (Red) */
+  --btn-danger: #FEF2F2;
+  --btn-danger-hover: #FEE2E2;
+  --btn-danger-text: #DC2626;
+  --btn-danger-border: #FECACA;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --background: #0F172A;
+  --foreground: #F1F5F9;
+
+  /* Primary Colors - Mệnh Hỏa 🔥 (Fire Element) */
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --primary-light: rgba(249, 115, 22, 0.15);
+
+  /* Surface & Cards */
+  --surface: #1E293B;
+  --surface-hover: #334155;
+  --surface-active: #475569;
+
+  /* Borders */
+  --border: #334155;
+  --border-light: #1E293B;
+  --border-focus: #F97316;
+
+  /* Text */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #0F172A;
+
+  /* Status Colors */
+  --success: #4ADE80;
+  --success-bg: #14532D;
+  --success-text: #4ADE80;
+
+  --warning: #FBBF24;
+  --warning-bg: #713F12;
+  --warning-text: #FBBF24;
+
+  --danger: #F87171;
+  --danger-bg: #7F1D1D;
+  --danger-text: #F87171;
+
+  /* Grid & Table */
+  --grid-header-bg: #334155;
+  --grid-row-hover: rgba(249, 115, 22, 0.1);
+  --grid-row-alt: #1E293B;
+
+  /* Sidebar */
+  --sidebar-bg: #1E293B;
+  --sidebar-item-hover: #334155;
+  --sidebar-item-active: #C2410C;
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-floating: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  /* ========================================
+     ACTION BUTTON COLORS (Dark Mode)
+     High-contrast & Premium Action Colors
+     ======================================== */
+
+  /* Save Action (Mệnh Hỏa / Vivid Orange) */
+  --btn-primary: #F97316;
+  --btn-primary-hover: #EA580C;
+  --btn-primary-text: #FFFFFF;
+
+  /* New Action (Deep Blueish Slate) */
+  --btn-new: #3B82F6;
+  --btn-new-hover: #2563EB;
+  --btn-new-text: #FFFFFF;
+
+  /* Copy Action (Indigo/Violet) */
+  --btn-copy: #8B5CF6;
+  --btn-copy-hover: #7C3AED;
+  --btn-copy-text: #FFFFFF;
+
+  /* Print Action (Dark Outline) */
+  --btn-secondary: #1E293B;
+  --btn-secondary-hover: #334155;
+  --btn-secondary-text: #CBD5E1;
+  --btn-secondary-border: #475569;
+
+  /* Delete Action (Deep Red Tint) */
+  --btn-danger: rgba(239, 68, 68, 0.1);
+  --btn-danger-hover: rgba(239, 68, 68, 0.2);
+  --btn-danger-text: #F87171;
+  --btn-danger-border: rgba(239, 68, 68, 0.3);
+}
+
+/* Base Styles */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Input Number Spinner Hide */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Focus Ring */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-light), 0 0 0 3px var(--primary);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
