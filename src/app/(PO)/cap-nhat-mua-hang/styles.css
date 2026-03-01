@@ -66,3 +66,14 @@ svg.save-icon[fill] {
     flex-direction: column;
     gap: 0.5rem;
 }
+
+.list-kethua-gap {
+    gap: 8px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.element-kethua-gap {
+    gap: 8px;
+    margin-right: 60px;
+}

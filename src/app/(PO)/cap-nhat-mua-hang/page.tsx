@@ -81,16 +81,16 @@ export default function PurchaseOrderUpdatePage() {
                 </fieldset>
 
                 {/* Checkboxes Row */}
-                <div className="flex gap-8 mb-4 border-b pb-4 mt-2">
-                    <label className="flex items-center gap-2 cursor-pointer">
+                <div className="flex gap-8 mb-4 border-b pb-4 mt-2 list-kethua-gap">
+                    <label className="flex items-center gap-2 cursor-pointer element-kethua-gap">
                         <input type="checkbox" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                         <span className="text-xs text-gray-700">Kế thừa yêu cầu mua hàng ...</span>
                     </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
+                    <label className="flex items-center gap-2 cursor-pointer element-kethua-gap">
                         <input type="checkbox" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                         <span className="text-xs text-gray-700">Kế thừa báo giá nhà cung cấp ...</span>
                     </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
+                    <label className="flex items-center gap-2 cursor-pointer element-kethua-gap">
                         <input type="checkbox" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                         <span className="text-xs text-gray-700">Kế thừa đơn hàng bán ...</span>
                     </label>
