@@ -115,25 +115,25 @@ export default function PurchaseOrderUpdatePage() {
                 {/* Data Grid */}
                 <div className="border border-gray-300 overflow-x-auto rounded">
                     <table className="w-full text-xs whitespace-nowrap">
-                        <thead className="bg-[#e4f0fa] text-[#0066b2] font-semibold border-b border-gray-300 text-center">
+                        <thead className="grid-thead">
                             <tr>
-                                <th className="p-1 border-r border-[#bedaf2] w-10">STT</th>
-                                <th className="p-1 border-r border-[#bedaf2] min-w-[80px]">Mã hàng</th>
-                                <th className="p-1 border-r border-[#bedaf2] min-w-[120px]">Tên mặt hàng</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Đơn vị tính</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Thông số kỹ thuật</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Số lượng</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Dài</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Rộng</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Dày</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Đơn giá</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Quy đổi</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Nhóm thuế</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Nguyên tệ</th>
-                                <th className="p-1 border-r border-[#bedaf2]">% thuế VAT</th>
-                                <th className="p-1 border-r border-[#bedaf2]">% Chiếu khấu</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Thuế GTGT</th>
-                                <th className="p-1 border-r border-[#bedaf2]">Thuế GTGT quy đổi</th>
+                                <th className="w-10">STT</th>
+                                <th className="min-w-[80px]">Mã hàng</th>
+                                <th className="min-w-[120px]">Tên mặt hàng</th>
+                                <th>Đơn vị tính</th>
+                                <th>Thông số kỹ thuật</th>
+                                <th>Số lượng</th>
+                                <th>Dài</th>
+                                <th>Rộng</th>
+                                <th>Dày</th>
+                                <th>Đơn giá</th>
+                                <th>Quy đổi</th>
+                                <th>Nhóm thuế</th>
+                                <th>Nguyên tệ</th>
+                                <th>% thuế VAT</th>
+                                <th>% Chiếu khấu</th>
+                                <th>Thuế GTGT</th>
+                                <th>Thuế GTGT quy đổi</th>
                             </tr>
                         </thead>
                         <tbody>

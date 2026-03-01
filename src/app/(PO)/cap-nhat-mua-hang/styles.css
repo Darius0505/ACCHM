@@ -78,6 +78,23 @@ svg.save-icon[fill] {
     margin-right: 60px;
 }
 
+.grid-thead {
+    background-color: #deeff7 !important;
+    color: #3a3ebf !important;
+    /* text-align: center !important;
+    font-weight: bold !important;
+    border-bottom: 1px solid #d1d5db !important; */
+}
+
+.grid-thead th {
+    background-color: #deeff7 !important;
+    color: #3a3ebf !important;
+    /* border-right: 1px solid #bedaf2 !important;
+    padding: 6px 4px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important; */
+}
+
 .table-lookup-container {
     display: flex !important;
     align-items: center !important;
