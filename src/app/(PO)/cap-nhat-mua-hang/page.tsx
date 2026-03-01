@@ -140,16 +140,16 @@ export default function PurchaseOrderUpdatePage() {
                             <tr className="border-b border-gray-200 hover:bg-yellow-50 align-top">
                                 <td className="p-1 border-r border-gray-200 bg-gray-100 text-center">1</td>
                                 <td className="p-1 border-r border-gray-200 text-center">
-                                    <div className="flex items-center justify-between border border-gray-300 bg-white">
-                                        <input className="w-full outline-none px-1 text-xs h-5" />
-                                        <button className="px-1 bg-gray-100 border-l border-gray-300 hover:bg-gray-200 text-[10px]">...</button>
+                                    <div className="table-lookup-container">
+                                        <input className="table-lookup-input" />
+                                        <button className="table-lookup-btn">...</button>
                                     </div>
                                 </td>
                                 <td className="p-1 border-r border-gray-200 bg-red-50"></td>
                                 <td className="p-1 border-r border-gray-200">
-                                    <div className="flex items-center justify-between border border-gray-300 bg-white">
-                                        <input className="w-full outline-none px-1 text-xs h-5" />
-                                        <button className="px-1 bg-gray-100 border-l border-gray-300 hover:bg-gray-200 text-[10px]">...</button>
+                                    <div className="table-lookup-container">
+                                        <input className="table-lookup-input" />
+                                        <button className="table-lookup-btn">...</button>
                                     </div>
                                 </td>
                                 <td className="p-1 border-r border-gray-200"></td>

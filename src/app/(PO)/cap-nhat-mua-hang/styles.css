@@ -77,3 +77,44 @@ svg.save-icon[fill] {
     gap: 8px;
     margin-right: 60px;
 }
+
+.table-lookup-container {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    min-width: 0;
+}
+
+.table-lookup-input {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    outline: none !important;
+    padding: 0 4px !important;
+    font-size: 11px !important;
+    height: 18px !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.table-lookup-btn {
+    flex: 0 0 auto !important;
+    width: 22px !important;
+    height: 18px !important;
+    background-color: #f3f4f6 !important;
+    border-left: 1px solid #d1d5db !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    font-size: 10px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.table-lookup-btn:hover {
+    background-color: #e5e7eb !important;
+}
