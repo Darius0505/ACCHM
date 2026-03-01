@@ -85,14 +85,17 @@ export default function PurchaseOrderUpdatePage() {
                     <label className="flex items-center gap-2 cursor-pointer element-kethua-gap">
                         <input type="checkbox" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                         <span className="text-xs text-gray-700">Kế thừa yêu cầu mua hàng ...</span>
+                        <input type="button" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer element-kethua-gap">
                         <input type="checkbox" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                         <span className="text-xs text-gray-700">Kế thừa báo giá nhà cung cấp ...</span>
+                        <input type="button" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer element-kethua-gap">
                         <input type="checkbox" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                         <span className="text-xs text-gray-700">Kế thừa đơn hàng bán ...</span>
+                        <input type="button" className="w-3 h-3 text-blue-600 rounded border-gray-300" />
                     </label>
                 </div>
 
