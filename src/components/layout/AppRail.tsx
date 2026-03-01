@@ -11,6 +11,7 @@ const apps = [
     { id: 'crm', name: 'CRM', icon: '🤝', href: '/crm', activePrefix: '/crm' },
     { id: 'sales', name: 'Bán hàng', icon: '🛒', href: '/sales', activePrefix: '/sales' },
     { id: 'purchases', name: 'Mua hàng', icon: '🛍️', href: '/purchases', activePrefix: '/purchases' },
+    { id: 'po', name: 'PO', icon: '🧾', href: '/cap-nhat-mua-hang', activePrefix: ['/cap-nhat-mua-hang', '/po'] },
     { id: 'inventory', name: 'Kho', icon: '📦', href: '/inventory', activePrefix: '/inventory' },
     { id: 'manufacturing', name: 'Sản xuất', icon: '🏭', href: '/manufacturing', activePrefix: '/manufacturing' },
     { id: 'accounting', name: 'Kế toán', icon: '💰', href: '/accounts', activePrefix: ['/accounts', '/cash', '/bank', '/general', '/tax'] },

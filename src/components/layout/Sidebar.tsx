@@ -170,6 +170,13 @@ export const appMenus: Record<string, { title?: string, items: { name: string, i
                 { name: 'Phân quyền', icon: '🔒', href: '/settings/roles' },
             ]
         }
+    ],
+    po: [
+        {
+            title: 'PO', items: [
+                { name: 'Cập nhật mua hàng', icon: '🛒', href: '/cap-nhat-mua-hang' },
+            ]
+        }
     ]
 };
 
@@ -208,7 +215,8 @@ export default function Sidebar() {
         'MUA HÀNG': true,
         'BÁN HÀNG': true,
         'ĐỐI TƯỢNG': true,
-        'BÁO CÁO': false
+        'BÁO CÁO': false,
+        'PO': true
     });
 
     const toggleGroup = (title: string) => {
@@ -226,9 +234,10 @@ export default function Sidebar() {
         if (pathname.startsWith('/purchases')) return 'purchases';
         if (pathname.startsWith('/inventory')) return 'inventory';
         if (pathname.startsWith('/manufacturing')) return 'manufacturing';
-        if (pathname.startsWith('/accounts') || pathname.startsWith('/accounting') || pathname.startsWith('/cash') || pathname.startsWith('/bank') || pathname.startsWith('/tax') || pathname.startsWith('/general')) return 'accounting';
+        if (pathname.startsWith('/accounting') || pathname.startsWith('/cash') || pathname.startsWith('/bank') || pathname.startsWith('/tax') || pathname.startsWith('/general')) return 'accounting';
         if (pathname.startsWith('/hrm')) return 'hrm';
         if (pathname.startsWith('/settings')) return 'settings';
+        if (pathname.startsWith('/cap-nhat-mua-hang')) return 'po';
         return 'dashboard'; // Default
     }, [pathname]);
 
@@ -271,7 +280,7 @@ export default function Sidebar() {
                 padding: isCollapsed ? '0 22px' : '0 20px',
             }}>
                 <div style={{ fontWeight: 800, fontSize: '14px', color: '#111827', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    {!isCollapsed ? (currentApp === 'accounting' ? 'KẾ TOÁN' : currentApp === 'purchases' ? 'MUA HÀNG' : currentApp === 'sales' ? 'BÁN HÀNG' : currentApp === 'office' ? 'VĂN PHÒNG' : currentApp === 'crm' ? 'CRM' : currentApp === 'inventory' ? 'KHO' : currentApp === 'manufacturing' ? 'SẢN XUẤT' : currentApp === 'hrm' ? 'NHÂN SỰ' : currentApp === 'settings' ? 'THIẾT LẬP' : 'DASHBOARD') : ''}
+                    {!isCollapsed ? (currentApp === 'accounting' ? 'KẾ TOÁN' : currentApp === 'purchases' ? 'MUA HÀNG' : currentApp === 'sales' ? 'BÁN HÀNG' : currentApp === 'office' ? 'VĂN PHÒNG' : currentApp === 'crm' ? 'CRM' : currentApp === 'inventory' ? 'KHO' : currentApp === 'manufacturing' ? 'SẢN XUẤT' : currentApp === 'hrm' ? 'NHÂN SỰ' : currentApp === 'settings' ? 'THIẾT LẬP' : currentApp === 'po' ? 'PO' : 'DASHBOARD') : ''}
                 </div>
                 <button
                     onClick={() => setIsCollapsed(!isCollapsed)}

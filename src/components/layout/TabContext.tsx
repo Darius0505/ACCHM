@@ -53,6 +53,9 @@ export function TabProvider({ children }: { children: ReactNode }) {
             if (pathname === '/') {
                 title = 'Bàn làm việc';
                 icon = '🖥️';
+            } else if (pathname === '/po' || pathname === '/cap-nhat-mua-hang') {
+                title = 'Cập nhật mua hàng';
+                icon = '🛒';
             } else {
                 let found = false;
                 for (const app in appMenus) {
